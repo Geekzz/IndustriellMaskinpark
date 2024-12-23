@@ -5,94 +5,86 @@
 <head>
     <link href="/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link href="/app.css" rel="stylesheet">
 </head>
 
-<div class="page">
-@*     <div class="sidebar">
-        <NavMenu />
-    </div> *@
-
-    <main>
-        <div class="top-row d-flex justify-content-around px-4">
-            <div class="d-flex">
-                <h2 class="mb-0">Management Central</h2>
-                <AuthorizeView>
-                    <Authorized>
-                        <NavLink class="btn" href="dashboard">Dashboard</NavLink>
-                    </Authorized>
-                </AuthorizeView>
-            </div>
-            <div class="d-flex">
-                @* <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="btn">About</a> *@
-                <AuthorizeView>
-                    <Authorized>
-                        <div class="nav-item">
-                            <NavLink class="d-flex justify-content-center align-items-center py-2" href="message">
-                                <span class="bi bi-chat-left-text-fill" aria-hidden="true"></span>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="d-flex justify-content-center align-items-center py-2" href="graph">
-                                <span class="bi bi-graph-down" aria-hidden="true"></span>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="d-flex justify-content-center align-items-center py-2" href="settings">
-                                <span class="bi bi-gear-fill" aria-hidden="true"></span>
-                            </NavLink>
-                        </div>
-
-
-
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="Account/Manage">
-                                <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <form action="Account/Logout" method="post">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                                <button type="submit" class="nav-link border-0 bg-transparent">
-                                    <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
-                                </button>
-                            </form>
-                        </div>
-
-                    </Authorized>
-                    <NotAuthorized>
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="Account/Register">
-                                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="Account/Login">
-                                <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                            </NavLink>
-                        </div>
-                    </NotAuthorized>
-                </AuthorizeView>
+<div class="d-flex flex-column" style="min-height: 100vh;">
+    <header class="top-row navbar navbar-expand-lg navbar-light bg-light px-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Management Central</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    <AuthorizeView>
+                        <Authorized>
+                            <li class="nav-item">
+                                <NavLink class="nav-link" href="dashboard">Dashboard</NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link d-flex justify-content-center align-items-center" href="message">
+                                    <span class="bi bi-chat-left-text-fill" aria-hidden="true"></span>
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link d-flex justify-content-center align-items-center" href="graph">
+                                    <span class="bi bi-graph-down" aria-hidden="true"></span>
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link d-flex justify-content-center align-items-center" href="settings">
+                                    <span class="bi bi-gear-fill" aria-hidden="true"></span>
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link" href="Account/Manage">
+                                    <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <form action="Account/Logout" method="post">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                                    <button type="submit" class="nav-link border-0 bg-transparent">
+                                        <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li class="nav-item">
+                                <NavLink class="nav-link" href="Account/Register">
+                                    <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link" href="Account/Login">
+                                    <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
+                                </NavLink>
+                            </li>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </ul>
             </div>
         </div>
-
-        <div class="full-page-background" style="background-color: aliceblue; padding: 60px;">
-            <article class="content px-4">
+    </header>
+    <main class="flex-grow-1">
+        <div class="full-page-background">
+            <article class="content" style="background-color: aliceblue; padding: 70px;">
                 @Body
             </article>
         </div>
-
-
     </main>
 </div>
+
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
 
 @code {
     private string? currentUrl;

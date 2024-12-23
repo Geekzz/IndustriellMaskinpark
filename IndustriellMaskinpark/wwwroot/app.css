@@ -5,8 +5,13 @@ html, body {
 }
 
 .full-page-background {
-    min-height: 100vh;
-    width: 100vw; 
+    min-height: 100vh; /* Covers full screen height */
+    width: 100%; /* Ensures full width */
+    background-color: aliceblue;
+}
+
+.navbar-nav .nav-item {
+    margin: 0.5rem 0; /* Optional spacing for dropdown items */
 }
 
 a, .btn-link {
