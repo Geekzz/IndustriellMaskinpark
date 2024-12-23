@@ -1,0 +1,51 @@
+﻿@page "/devices/details"
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Device</h2>
+    <hr />
+    @if (device is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Location</dt>
+            <dd class="col-sm-10">@device.Location</dd>
+            <dt class="col-sm-2">LastUpdated</dt>
+            <dd class="col-sm-10">@device.LastUpdated</dd>
+            <dt class="col-sm-2">Type</dt>
+            <dd class="col-sm-10">@device.Type</dd>
+            <dt class="col-sm-2">Status</dt>
+            <dd class="col-sm-10">@device.Status</dd>
+        </dl>
+        <div>
+            <a href="@($"/devices/edit?id={device.Id}")">Edit</a> |
+            <a href="@($"/devices")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Device? device;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        device = await context.Devices.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (device is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

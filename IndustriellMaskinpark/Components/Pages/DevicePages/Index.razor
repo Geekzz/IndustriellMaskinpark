@@ -1,0 +1,38 @@
+﻿@page "/devices"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using IndustriellMaskinpark.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="devices/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.Devices">
+    <PropertyColumn Property="device => device.Location" />
+    <PropertyColumn Property="device => device.LastUpdated" />
+    <PropertyColumn Property="device => device.Type" />
+    <PropertyColumn Property="device => device.Status" />
+
+    <TemplateColumn Context="device">
+        <a href="@($"devices/edit?id={device.Id}")">Edit</a> |
+        <a href="@($"devices/details?id={device.Id}")">Details</a> |
+        <a href="@($"devices/delete?id={device.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private ApplicationDbContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
