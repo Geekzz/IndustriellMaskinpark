@@ -1,6 +1,5 @@
 ﻿@page "/devices/delete"
 @using Microsoft.EntityFrameworkCore
-@using IndustriellMaskinpark.Models
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
@@ -44,7 +43,7 @@
     private Device? device;
 
     [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    private Guid Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

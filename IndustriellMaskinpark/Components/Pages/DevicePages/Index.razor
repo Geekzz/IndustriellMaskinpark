@@ -1,37 +1,69 @@
 ﻿@page "/devices"
 @using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.QuickGrid
 @using IndustriellMaskinpark.Data
-@implements IAsyncDisposable
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
+@implements IAsyncDisposable
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Dashboard</PageTitle>
 
-<h1>Index</h1>
+<h1 class="text-center mb-4">Dashboard</h1>
 
-<p>
-    <a href="devices/create">Create New</a>
-</p>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
 
-<QuickGrid Class="table" Items="context.Devices">
-    <PropertyColumn Property="device => device.Location" />
-    <PropertyColumn Property="device => device.LastUpdated" />
-    <PropertyColumn Property="device => device.Type" />
-    <PropertyColumn Property="device => device.Status" />
+<div class="container">
+    <!-- Card for Devices -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Device List</h5>
+            <a href="/devices/create" class="btn btn-primary">Create New</a>
+        </div>
+        <div class="card-body">
+            @if (Devices is null || !Devices.Any())
+            {
+                <p class="text-center">No devices available.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Device Id</th>
+                                <th>Location</th>
+                                <th>Last Updated</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var device in Devices)
+                            {
+                                <DeviceRow Id="@device.Id"
+                                           Location="@device.Location"
+                                           LastUpdated="@device.LastUpdated"
+                                           Type="@device.Type"
+                                           Status="@device.Status" />
+                            }
 
-    <TemplateColumn Context="device">
-        <a href="@($"devices/edit?id={device.Id}")">Edit</a> |
-        <a href="@($"devices/details?id={device.Id}")">Details</a> |
-        <a href="@($"devices/delete?id={device.Id}")">Delete</a>
-    </TemplateColumn>
-</QuickGrid>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 @code {
     private ApplicationDbContext context = default!;
+    private List<Device> Devices = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         context = DbFactory.CreateDbContext();
+        Devices = await context.Devices.ToListAsync();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

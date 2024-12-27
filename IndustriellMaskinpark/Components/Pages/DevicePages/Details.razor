@@ -5,29 +5,40 @@
 
 <PageTitle>Details</PageTitle>
 
-<h1>Details</h1>
+<h1 class="text-center mb-4">Device Details</h1>
 
-<div>
-    <h2>Device</h2>
-    <hr />
+<div class="container">
     @if (device is null)
     {
-        <p><em>Loading...</em></p>
+        <div class="text-center">
+            <p><em>Loading...</em></p>
+        </div>
     }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">Location</dt>
-            <dd class="col-sm-10">@device.Location</dd>
-            <dt class="col-sm-2">LastUpdated</dt>
-            <dd class="col-sm-10">@device.LastUpdated</dd>
-            <dt class="col-sm-2">Type</dt>
-            <dd class="col-sm-10">@device.Type</dd>
-            <dt class="col-sm-2">Status</dt>
-            <dd class="col-sm-10">@device.Status</dd>
-        </dl>
-        <div>
-            <a href="@($"/devices/edit?id={device.Id}")">Edit</a> |
-            <a href="@($"/devices")">Back to List</a>
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Device Information</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Location</dt>
+                    <dd class="col-sm-9">@device.Location</dd>
+
+                    <dt class="col-sm-3">Last Updated</dt>
+                    <dd class="col-sm-9">@device.LastUpdated.ToString("g")</dd>
+
+                    <dt class="col-sm-3">Type</dt>
+                    <dd class="col-sm-9">@device.Type</dd>
+
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9">@device.Status</dd>
+                </dl>
+            </div>
+            <div class="card-footer text-end">
+                <a href="@($"/devices/edit?id={device.Id}")" class="btn btn-warning me-2">Edit</a>
+                <a href="/devices" class="btn btn-secondary">Back to List</a>
+            </div>
         </div>
     }
 </div>
@@ -36,7 +47,7 @@
     private Device? device;
 
     [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    private Guid Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

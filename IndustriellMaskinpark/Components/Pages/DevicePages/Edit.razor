@@ -2,76 +2,83 @@
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject IDeviceService DeviceService
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Device</PageTitle>
 
-<h1>Edit Device</h1>
-<hr />
+<h1 class="text-center mb-4">Edit Device</h1>
 
-@if (Device is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm Model="Device" OnValidSubmit="UpdateDevice">
-                <DataAnnotationsValidator />
-                <ValidationSummary role="alert" />
-                <input type="hidden" name="Device.Id" value="@Device.Id" />
-
-                <!-- Location Field -->
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location:</label>
-                    <InputText id="location" @bind-Value="Device.Location" class="form-control" />
-                    <ValidationMessage For="() => Device.Location" class="text-danger" />
-                </div>
-
-                <!-- LastUpdated Field -->
-                <div class="mb-3">
-                    <label for="lastupdated" class="form-label">Last Updated:</label>
-                    <InputDate id="lastupdated" @bind-Value="Device.LastUpdated" class="form-control" />
-                    <ValidationMessage For="() => Device.LastUpdated" class="text-danger" />
-                </div>
-
-                <!-- Type Field -->
-                <div class="mb-3">
-                    <label for="type" class="form-label">Type:</label>
-                    <InputSelect id="type" @bind-Value="Device.Type" class="form-control">
-                        @foreach (var type in Enum.GetValues<DeviceType>())
-                        {
-                            <option value="@type">@type</option>
-                        }
-                    </InputSelect>
-                    <ValidationMessage For="() => Device.Type" class="text-danger" />
-                </div>
-
-                <!-- Status Field -->
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status:</label>
-                    <InputSelect id="status" @bind-Value="Device.Status" class="form-control">
-                        @foreach (var status in Enum.GetValues<DeviceStatus>())
-                        {
-                            <option value="@status">@status</option>
-                        }
-                    </InputSelect>
-                    <ValidationMessage For="() => Device.Status" class="text-danger" />
-                </div>
-
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
+<div class="container">
+    @if (Device is null)
+    {
+        <div class="text-center">
+            <p><em>Loading...</em></p>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Update Device Information</h5>
+            </div>
+            <div class="card-body">
+                <EditForm Model="Device" OnValidSubmit="UpdateDevice" FormName="editDeviceForm">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary role="alert" />
 
-<div>
-    <a href="/devices">Back to List</a>
+                    <!-- Location Field -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location:</label>
+                        <InputText id="location" @bind-Value="Device.Location" class="form-control" />
+                        <ValidationMessage For="() => Device.Location" class="text-danger" />
+                    </div>
+
+                    <!-- LastUpdated Field -->
+                    <div class="mb-3">
+                        <label for="lastupdated" class="form-label">Last Updated:</label>
+                        <InputDate id="lastupdated" @bind-Value="Device.LastUpdated" TValue="DateTime" class="form-control" />
+                        <ValidationMessage For="() => Device.LastUpdated" class="text-danger" />
+                    </div>
+
+                    <!-- Type Field -->
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type:</label>
+                        <InputSelect id="type" @bind-Value="Device.Type" TValue="DeviceType" class="form-control">
+                            @foreach (var type in Enum.GetValues<DeviceType>())
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="() => Device.Type" class="text-danger" />
+                    </div>
+
+                    <!-- Status Field -->
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <InputSelect id="status" @bind-Value="Device.Status" TValue="DeviceStatus" class="form-control">
+                            @foreach (var status in Enum.GetValues<DeviceStatus>())
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="() => Device.Status" class="text-danger" />
+                    </div>
+
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="/devices" class="btn btn-secondary ms-2">Back to List</a>
+                    </div>
+                </EditForm>
+
+            </div>
+        </div>
+    }
 </div>
 
 @code {
     [SupplyParameterFromQuery]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     private Device? Device { get; set; }
 
@@ -88,31 +95,16 @@ else
 
     private async Task UpdateDevice()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Attach(Device!).State = EntityState.Modified;
-
         try
         {
-            await context.SaveChangesAsync();
+            Console.WriteLine($"Before Update: Location={Device!.Location}, LastUpdated={Device.LastUpdated}, Type={Device.Type}, Status={Device.Status}");
+            await DeviceService.UpdateDeviceAsync(Device);
+            Console.WriteLine("Device updated successfully.");
+            NavigationManager.NavigateTo("/devices");
         }
-        catch (DbUpdateConcurrencyException)
+        catch (Exception ex)
         {
-            if (!DeviceExists(Device!.Id))
-            {
-                NavigationManager.NavigateTo("/notfound");
-            }
-            else
-            {
-                throw;
-            }
+            Console.WriteLine($"Error updating device: {ex.Message}");
         }
-
-        NavigationManager.NavigateTo("/devices");
-    }
-
-    private bool DeviceExists(int id)
-    {
-        using var context = DbFactory.CreateDbContext();
-        return context.Devices.Any(e => e.Id == id);
     }
 }

@@ -1,0 +1,39 @@
+﻿@typeparam TStatusEnum
+<tr>
+    <td>@Id</td>
+    <td>@Location</td>
+    <td>@LastUpdated.ToString("g")</td>
+    <td>@Type</td>
+    <td>
+        <button class="@GetStatusClass(Status)" style="width: 100px;">@Status</button>
+    </td>
+    <td>
+        <a href="@($"devices/edit?id={Id}")" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-pen"></i>
+        </a>
+        <a href="@($"devices/details?id={Id}")" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-info-square"></i>
+        </a>
+        <a href="@($"devices/delete?id={Id}")" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-trash"></i>
+        </a>
+    </td>
+</tr>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    [Parameter] public string Location { get; set; }
+    [Parameter] public DateTime LastUpdated { get; set; }
+    [Parameter] public DeviceType Type { get; set; }
+    [Parameter] public TStatusEnum Status { get; set; }
+
+    private string GetStatusClass(TStatusEnum status)
+    {
+        return status switch
+        {
+            DeviceStatus.Online => "btn btn-success btn-sm",    // Green for Online
+            DeviceStatus.Offline => "btn btn-danger btn-sm",   // Red for Offline
+            _ => "btn btn-secondary btn-sm"
+        };
+    }
+}

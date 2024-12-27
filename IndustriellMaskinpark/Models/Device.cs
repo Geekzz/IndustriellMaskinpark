@@ -12,12 +12,11 @@ namespace IndustriellMaskinpark.Models
     public enum DeviceStatus
     {
         Online,
-        Maintenance,
         Offline
     }
     public class Device
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(100, ErrorMessage = "Location cannot exceed 100 characters.")]
