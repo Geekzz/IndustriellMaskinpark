@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using IndustriellMaskinpark.Data
+@using System.Security.Claims
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -105,6 +106,11 @@
         }
 
         Logger.LogInformation("User created a new account with password.");
+
+        // Add FullName Claim
+        var fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+        await UserManager.AddClaimAsync(user, fullNameClaim);
+
 
         var userId = await UserManager.GetUserIdAsync(user);
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
