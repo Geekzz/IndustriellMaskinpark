@@ -1,0 +1,44 @@
+﻿@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
+
+<div class="card h-100 w-100">
+    <div class="card-header">
+        <h3 class="card-title text-center">Daily Stats</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-text fs-4 text-center">Total Devices: @DeviceCount</p>
+        @if (LatestDevice != null)
+        {
+            <hr />
+            <div class="text-center">
+                <h5>Latest Device Added:</h5>
+                <p class="mb-1"><strong>Location:</strong> @LatestDevice.Location</p>
+                <p class="mb-1"><strong>Type:</strong> @LatestDevice.Type</p>
+                <p class="mb-1"><strong>Status:</strong> @LatestDevice.Status</p>
+                <p><strong>Added On:</strong> @LatestDevice.LastUpdated.ToString("g")</p>
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted">No devices available.</p>
+        }
+    </div>
+</div>
+
+@code {
+    private int DeviceCount;
+    private Device? LatestDevice;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+
+        // Fetch total devices count
+        DeviceCount = await context.Devices.CountAsync();
+
+        // Fetch the latest device added (order by LastUpdated descending)
+        LatestDevice = await context.Devices
+            .OrderByDescending(d => d.LastUpdated)
+            .FirstOrDefaultAsync();
+    }
+}

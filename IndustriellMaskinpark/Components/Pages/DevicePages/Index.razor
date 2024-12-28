@@ -13,45 +13,54 @@
 </head>
 
 <div class="container">
-    <!-- Card for Devices -->
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Device List</h5>
-            <a href="/devices/create" class="btn btn-primary">Create New</a>
+    <!-- Row for Layout -->
+    <div class="row">
+        <!-- DailyStats Column -->
+        <div class="col-md-3">
+            <DailyStats />
         </div>
-        <div class="card-body">
-            @if (Devices is null || !Devices.Any())
-            {
-                <p class="text-center">No devices available.</p>
-            }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Device Id</th>
-                                <th>Location</th>
-                                <th>Last Updated</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var device in Devices)
-                            {
-                                <DeviceRow Id="@device.Id"
-                                           Location="@device.Location"
-                                           LastUpdated="@device.LastUpdated"
-                                           Type="@device.Type"
-                                           Status="@device.Status" />
-                            }
 
-                        </tbody>
-                    </table>
+        <!-- Device List Column -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Device List</h5>
+                    <a href="/devices/create" class="btn btn-primary">Create New</a>
                 </div>
-            }
+                <div class="card-body">
+                    @if (Devices is null || !Devices.Any())
+                    {
+                        <p class="text-center">No devices available.</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Device Id</th>
+                                        <th>Location</th>
+                                        <th>Last Updated</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var device in Devices)
+                                    {
+                                        <DeviceRow Id="@device.Id"
+                                                   Location="@device.Location"
+                                                   LastUpdated="@device.LastUpdated"
+                                                   Type="@device.Type"
+                                                   Status="@device.Status" />
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>
