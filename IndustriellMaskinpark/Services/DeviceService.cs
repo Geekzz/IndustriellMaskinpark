@@ -18,7 +18,7 @@ namespace IndustriellMaskinpark.Services.Implementations
             return await _context.Devices.ToListAsync();
         }
 
-        public async Task<Device?> GetDeviceByIdAsync(int id)
+        public async Task<Device?> GetDeviceByIdAsync(Guid id)
         {
             return await _context.Devices.FindAsync(id);
         }
@@ -35,7 +35,7 @@ namespace IndustriellMaskinpark.Services.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteDeviceAsync(int id)
+        public async Task DeleteDeviceAsync(Guid id)
         {
             var device = await _context.Devices.FindAsync(id);
             if (device != null)

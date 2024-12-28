@@ -1,8 +1,7 @@
 ﻿@page "/devices/edit"
-@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
-@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject IDeviceService DeviceService
 @rendermode InteractiveServer
 
 <PageTitle>Edit</PageTitle>
@@ -80,8 +79,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        Device = await context.Devices.FirstOrDefaultAsync(d => d.Id == Id);
+        // Use DeviceService to fetch the device details
+        Device = await DeviceService.GetDeviceByIdAsync(Id);
 
         if (Device == null)
         {
@@ -91,9 +90,10 @@
 
     private async Task UpdateDevice()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Devices.Update(Device!);
-        await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/devices");
+        if (Device != null)
+        {
+            await DeviceService.UpdateDeviceAsync(Device); // Use DeviceService to update the device
+            NavigationManager.NavigateTo("/devices");
+        }
     }
 }

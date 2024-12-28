@@ -1,8 +1,7 @@
 ﻿@page "/devices"
-@using Microsoft.EntityFrameworkCore
-@using IndustriellMaskinpark.Data
+@using IndustriellMaskinpark.Services
 @attribute [Authorize]
-@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
+@inject IDeviceService DeviceService
 @implements IAsyncDisposable
 
 <PageTitle>Dashboard</PageTitle>
@@ -67,14 +66,13 @@
 </div>
 
 @code {
-    private ApplicationDbContext context = default!;
     private List<Device> Devices = new();
 
     protected override async Task OnInitializedAsync()
     {
-        context = DbFactory.CreateDbContext();
-        Devices = await context.Devices.ToListAsync();
+        // Use DeviceService to fetch all devices
+        Devices = await DeviceService.GetAllDevicesAsync();
     }
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    public ValueTask DisposeAsync() => ValueTask.CompletedTask; // No DbContext to dispose
 }

@@ -1,8 +1,7 @@
 ﻿@page "/devices/details"
-@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
-@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject IDeviceService DeviceService
 
 <PageTitle>Details</PageTitle>
 
@@ -52,8 +51,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        device = await context.Devices.FirstOrDefaultAsync(m => m.Id == Id);
+        // Use DeviceService to fetch the device details
+        device = await DeviceService.GetDeviceByIdAsync(Id);
 
         if (device is null)
         {

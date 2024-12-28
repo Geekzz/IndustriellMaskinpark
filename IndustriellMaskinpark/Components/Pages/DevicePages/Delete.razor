@@ -1,8 +1,7 @@
 ﻿@page "/devices/delete"
-@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
-@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject IDeviceService DeviceService
 
 <PageTitle>Delete</PageTitle>
 
@@ -56,8 +55,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        device = await context.Devices.FirstOrDefaultAsync(m => m.Id == Id);
+        // Use DeviceService to fetch the device by ID
+        device = await DeviceService.GetDeviceByIdAsync(Id);
 
         if (device is null)
         {
@@ -67,9 +66,10 @@
 
     private async Task DeleteDevice()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Devices.Remove(device!);
-        await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/devices");
+        if (device != null)
+        {
+            await DeviceService.DeleteDeviceAsync(device.Id); // Use DeviceService to delete the device
+            NavigationManager.NavigateTo("/devices");
+        }
     }
 }

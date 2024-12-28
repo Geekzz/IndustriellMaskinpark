@@ -1,8 +1,8 @@
 ﻿@page "/devices/create"
 @using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
-@inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject IDeviceService DeviceService
 
 <PageTitle>Create</PageTitle>
 
@@ -74,9 +74,7 @@
     private async Task AddDevice()
     {
         Console.WriteLine($"Before Create: Location={Device!.Location}, LastUpdated={Device.LastUpdated}, Type={Device.Type}, Status={Device.Status}");
-        using var context = DbFactory.CreateDbContext();
-        context.Devices.Add(Device);
-        await context.SaveChangesAsync();
+        await DeviceService.AddDeviceAsync(Device); // Using DeviceService to add the device
         NavigationManager.NavigateTo("/devices");
     }
 }
