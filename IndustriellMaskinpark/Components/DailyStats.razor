@@ -9,6 +9,26 @@
         <p class="card-text fs-4 text-center">Total Devices: @DeviceCount</p>
         <p class="card-text text-success text-center">Devices Online: @DevicesOnline</p>
         <p class="card-text text-danger text-center">Devices Offline: @DevicesOffline</p>
+
+        <hr />
+        <h5 class="text-center">Devices by Type</h5>
+        <ul class="list-group">
+            @if (DeviceTypeCounts.Any())
+            {
+                @foreach (var typeCount in DeviceTypeCounts)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @typeCount.Key
+                        <span class="badge bg-primary rounded-pill">@typeCount.Value</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="list-group-item text-muted">No device types available</li>
+            }
+        </ul>
+
         @if (LatestDevice != null)
         {
             <hr />
@@ -32,6 +52,7 @@
     private int DevicesOnline;
     private int DevicesOffline;
     private Device? LatestDevice;
+    private Dictionary<DeviceType, int> DeviceTypeCounts = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,5 +73,11 @@
         LatestDevice = await context.Devices
             .OrderByDescending(d => d.LastUpdated)
             .FirstOrDefaultAsync();
+
+        // Fetch the count of each device type
+        DeviceTypeCounts = await context.Devices
+            .GroupBy(d => d.Type)
+            .Select(g => new { Type = g.Key, Count = g.Count() })
+            .ToDictionaryAsync(x => x.Type, x => x.Count);
     }
 }
