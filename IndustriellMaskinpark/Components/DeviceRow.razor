@@ -5,20 +5,21 @@
     <td>@LastUpdated.ToString("g")</td>
     <td>@Type</td>
     <td>
-        <button class="@GetStatusClass(Status)" style="width: 100px;">@Status</button>
+        <button class="@GetStatusClass(Status)" style="width: 100px;" title="Device status">@Status</button>
     </td>
     <td>
-        <a href="@($"devices/edit?id={Id}")" class="btn btn-sm btn-outline-secondary">
+        <a href="@($"devices/edit?id={Id}")" class="btn btn-sm btn-outline-secondary" title="Edit">
             <i class="bi bi-pen"></i>
         </a>
-        <a href="@($"devices/details?id={Id}")" class="btn btn-sm btn-outline-secondary">
+        <a href="@($"devices/details?id={Id}")" class="btn btn-sm btn-outline-secondary" title="View Details">
             <i class="bi bi-info-square"></i>
         </a>
-        <a href="@($"devices/delete?id={Id}")" class="btn btn-sm btn-outline-secondary">
+        <a href="@($"devices/delete?id={Id}")" class="btn btn-sm btn-outline-secondary" title="Delete">
             <i class="bi bi-trash"></i>
         </a>
     </td>
 </tr>
+
 
 @code {
     [Parameter] public Guid Id { get; set; }

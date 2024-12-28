@@ -7,6 +7,8 @@
     </div>
     <div class="card-body">
         <p class="card-text fs-4 text-center">Total Devices: @DeviceCount</p>
+        <p class="card-text text-success text-center">Devices Online: @DevicesOnline</p>
+        <p class="card-text text-danger text-center">Devices Offline: @DevicesOffline</p>
         @if (LatestDevice != null)
         {
             <hr />
@@ -27,6 +29,8 @@
 
 @code {
     private int DeviceCount;
+    private int DevicesOnline;
+    private int DevicesOffline;
     private Device? LatestDevice;
 
     protected override async Task OnInitializedAsync()
@@ -35,6 +39,14 @@
 
         // Fetch total devices count
         DeviceCount = await context.Devices.CountAsync();
+
+        // Fetch the number of devices online
+        DevicesOnline = await context.Devices
+            .CountAsync(d => d.Status == DeviceStatus.Online);
+
+        // Fetch the number of devices offline
+        DevicesOffline = await context.Devices
+            .CountAsync(d => d.Status == DeviceStatus.Offline);
 
         // Fetch the latest device added (order by LastUpdated descending)
         LatestDevice = await context.Devices
