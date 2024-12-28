@@ -24,7 +24,7 @@ namespace IndustriellMaskinpark.Models
 
         [Display(Name = "Last Updated")]
         [Required]
-        public DateTime LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         [Required]
         public DeviceType Type { get; set; }
