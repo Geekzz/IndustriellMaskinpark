@@ -1,6 +1,7 @@
 ﻿@page "/devices"
 @using Microsoft.EntityFrameworkCore
 @using IndustriellMaskinpark.Data
+@attribute [Authorize]
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @implements IAsyncDisposable
 

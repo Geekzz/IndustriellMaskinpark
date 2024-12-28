@@ -1,65 +1,75 @@
 ﻿@page "/devices/edit"
 @using Microsoft.EntityFrameworkCore
+@attribute [Authorize]
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
 <PageTitle>Edit</PageTitle>
 
-<h1>Edit</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Device</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card shadow-sm" style="width: 35rem;">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>Device Details</h4>
+            </div>
+            <div class="card-body">
+                @if (Device == null)
+                {
+                    <div class="text-center">
+                        <p><em>Loading...</em></p>
+                    </div>
+                }
+                else
+                {
+                    <EditForm Model="Device" OnValidSubmit="UpdateDevice">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" role="alert" />
 
-<h2>Device</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @if (Device == null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <EditForm Model="Device" OnValidSubmit="UpdateDevice" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" role="alert" />
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location:</label>
-                    <InputText id="location" @bind-Value="Device.Location" class="form-control" />
-                    <ValidationMessage For="() => Device.Location" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="lastupdated" class="form-label">Last Updated:</label>
-                    <InputDate id="lastupdated" @bind-Value="Device.LastUpdated" class="form-control" />
-                    <ValidationMessage For="() => Device.LastUpdated" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="type" class="form-label">Type:</label>
-                    <InputSelect id="type" @bind-Value="Device.Type" class="form-control">
-                        @foreach (var type in Enum.GetValues<DeviceType>())
-                        {
-                            <option value="@type">@type</option>
-                        }
-                    </InputSelect>
-                    <ValidationMessage For="() => Device.Type" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status:</label>
-                    <InputSelect id="status" @bind-Value="Device.Status" class="form-control">
-                        @foreach (var status in Enum.GetValues<DeviceStatus>())
-                        {
-                            <option value="@status">@status</option>
-                        }
-                    </InputSelect>
-                    <ValidationMessage For="() => Device.Status" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </EditForm>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location:</label>
+                            <InputText id="location" @bind-Value="Device.Location" class="form-control" />
+                            <ValidationMessage For="() => Device.Location" class="text-danger" />
+                        </div>
 
-        }
+                        <div class="mb-3">
+                            <label for="lastupdated" class="form-label">Last Updated:</label>
+                            <InputDate id="lastupdated" @bind-Value="Device.LastUpdated" class="form-control" />
+                            <ValidationMessage For="() => Device.LastUpdated" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Type:</label>
+                            <InputSelect id="type" @bind-Value="Device.Type" class="form-control">
+                                @foreach (var type in Enum.GetValues<DeviceType>())
+                                {
+                                    <option value="@type">@type</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="() => Device.Type" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status:</label>
+                            <InputSelect id="status" @bind-Value="Device.Status" class="form-control">
+                                @foreach (var status in Enum.GetValues<DeviceStatus>())
+                                {
+                                    <option value="@status">@status</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="() => Device.Status" class="text-danger" />
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="/devices" class="btn btn-secondary ms-2">Back</a>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
     </div>
-</div>
-
-<div>
-    <a href="/devices">Back to List</a>
 </div>
 
 @code {

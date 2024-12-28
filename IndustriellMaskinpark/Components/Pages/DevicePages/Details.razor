@@ -1,5 +1,6 @@
 ﻿@page "/devices/details"
 @using Microsoft.EntityFrameworkCore
+@attribute [Authorize]
 @inject IDbContextFactory<IndustriellMaskinpark.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
