@@ -12,17 +12,26 @@
 <div class="d-flex flex-column" style="min-height: 100vh;">
     <header class="top-row navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
+            <!-- Brand -->
             <a class="navbar-brand" href="#">Management Central</a>
+
+            <!-- Dashboard Button (Only for Authorized Users) -->
+            <AuthorizeView>
+                <Authorized>
+                    <a href="devices" class="btn btn-outline-secondary ms-3">Dashboard</a>
+                </Authorized>
+            </AuthorizeView>
+
+            <!-- Mobile Toggle Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Links -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto">
                     <AuthorizeView>
                         <Authorized>
-                            <li class="nav-item">
-                                <NavLink class="nav-link" href="devices">Dashboard</NavLink>
-                            </li>
                             <li class="nav-item">
                                 <NavLink class="nav-link d-flex justify-content-center align-items-center" href="message">
                                     <span class="bi bi-chat-left-text-fill" aria-hidden="true"></span>
@@ -34,15 +43,15 @@
                                 </NavLink>
                             </li>
                             <li class="nav-item">
-                                <NavLink class="nav-link d-flex justify-content-center align-items-center" href="settings">
+                                <NavLink class="nav-link d-flex justify-content-center align-items-center" href="Account/Manage">
                                     <span class="bi bi-gear-fill" aria-hidden="true"></span>
                                 </NavLink>
                             </li>
-                            <li class="nav-item">
-                                <NavLink class="nav-link" href="Account/Manage">
-                                    <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value
-                                </NavLink>
+                            <li class="nav-item d-flex align-items-center">
+                                <span class="bi bi-person-fill-nav-menu me-2" aria-hidden="true"></span>
+                                @context.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value
                             </li>
+
                             <li class="nav-item">
                                 <form action="Account/Logout" method="post">
                                     <AntiforgeryToken />
@@ -70,6 +79,7 @@
             </div>
         </div>
     </header>
+
     <main class="flex-grow-1">
         <div class="full-page-background">
             <article class="content" style="background-color: aliceblue; padding: 70px;">
@@ -78,7 +88,6 @@
         </div>
     </main>
 </div>
-
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.

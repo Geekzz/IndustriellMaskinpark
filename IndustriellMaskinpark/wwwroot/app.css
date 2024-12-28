@@ -2,7 +2,11 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     height: 100%;
     margin: 0;
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
 }
+
 
 .full-page-background {
     min-height: 100vh; /* Covers full screen height */
