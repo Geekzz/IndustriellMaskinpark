@@ -4,12 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustriellMaskinpark", "IndustriellMaskinpark\IndustriellMaskinpark.csproj", "{F7210353-13E8-4B74-961E-0453FC6B510D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A51EE31B-10DE-4831-A520-A6A15C7C6756} = {A51EE31B-10DE-4831-A520-A6A15C7C6756}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustriellMaskinpark.Domain", "IndustriellMaskinpark.Domain\IndustriellMaskinpark.Domain.csproj", "{D8CAF080-4E53-4A5B-B3D3-5A27BE0E1914}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustriellMaskinpark.Infrastructure", "IndustriellMaskinpark.Infrastructure\IndustriellMaskinpark.Infrastructure.csproj", "{5A2907B0-D39C-4EC6-BF0E-FCEAFCE86732}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A51EE31B-10DE-4831-A520-A6A15C7C6756} = {A51EE31B-10DE-4831-A520-A6A15C7C6756}
+		{D8CAF080-4E53-4A5B-B3D3-5A27BE0E1914} = {D8CAF080-4E53-4A5B-B3D3-5A27BE0E1914}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustriellMaskinpark.Application", "IndustriellMaskinpark.Application\IndustriellMaskinpark.Application.csproj", "{A51EE31B-10DE-4831-A520-A6A15C7C6756}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8CAF080-4E53-4A5B-B3D3-5A27BE0E1914} = {D8CAF080-4E53-4A5B-B3D3-5A27BE0E1914}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,9 @@
+using IndustriellMaskinpark.Application.Interfaces;
 using IndustriellMaskinpark.Components;
 using IndustriellMaskinpark.Components.Account;
-using IndustriellMaskinpark.Data;
-using IndustriellMaskinpark.Models;
-using IndustriellMaskinpark.Services;
-using IndustriellMaskinpark.Services.Implementations;
+using IndustriellMaskinpark.Infrastructure.Data;
+using IndustriellMaskinpark.Infrastructure.Repositories;
+using IndustriellMaskinpark.Application.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +50,7 @@ namespace IndustriellMaskinpark
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
             builder.Services.AddScoped<IDeviceService, DeviceService>();
 
             var app = builder.Build();

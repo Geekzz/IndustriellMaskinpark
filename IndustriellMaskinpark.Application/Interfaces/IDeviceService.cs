@@ -1,6 +1,6 @@
-﻿using IndustriellMaskinpark.Models;
+﻿using IndustriellMaskinpark.Domain.Entity;
 
-namespace IndustriellMaskinpark.Services
+namespace IndustriellMaskinpark.Application.Interfaces
 {
     public interface IDeviceService
     {

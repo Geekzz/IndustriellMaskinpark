@@ -1,8 +1,8 @@
-using IndustriellMaskinpark.Models;
+using IndustriellMaskinpark.Domain.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IndustriellMaskinpark.Data
+namespace IndustriellMaskinpark.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

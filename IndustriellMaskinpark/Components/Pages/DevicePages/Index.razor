@@ -1,5 +1,7 @@
 ﻿@page "/devices"
-@using IndustriellMaskinpark.Services
+@using IndustriellMaskinpark.Application.Interfaces
+@using IndustriellMaskinpark.Domain.Entity
+@using IndustriellMaskinpark.Application.Services;
 @attribute [Authorize]
 @inject IDeviceService DeviceService
 @implements IAsyncDisposable

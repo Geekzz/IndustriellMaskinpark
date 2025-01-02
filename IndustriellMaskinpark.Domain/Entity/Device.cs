@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IndustriellMaskinpark.Models
+namespace IndustriellMaskinpark.Domain.Entity
 {
     public enum DeviceType
     {

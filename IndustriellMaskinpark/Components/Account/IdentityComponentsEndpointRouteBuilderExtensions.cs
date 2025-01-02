@@ -2,7 +2,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using IndustriellMaskinpark.Components.Account.Pages;
 using IndustriellMaskinpark.Components.Account.Pages.Manage;
-using IndustriellMaskinpark.Data;
+using IndustriellMaskinpark.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
-namespace Microsoft.AspNetCore.Routing
+namespace IndustriellMaskinpark.Components.Account
 {
     internal static class IdentityComponentsEndpointRouteBuilderExtensions
     {

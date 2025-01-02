@@ -1,14 +1,15 @@
-﻿using IndustriellMaskinpark.Data;
-using IndustriellMaskinpark.Models;
+﻿using IndustriellMaskinpark.Domain.Entity;
+using IndustriellMaskinpark.Infrastructure.Data;
+using IndustriellMaskinpark.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace IndustriellMaskinpark.Services.Implementations
+namespace IndustriellMaskinpark.Infrastructure.Repositories
 {
-    public class DeviceService : IDeviceService
+    public class DeviceRepository : IDeviceRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public DeviceService(ApplicationDbContext context)
+        public DeviceRepository(ApplicationDbContext context)
         {
             _context = context;
         }

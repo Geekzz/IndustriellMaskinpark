@@ -1,4 +1,4 @@
-using IndustriellMaskinpark.Data;
+using IndustriellMaskinpark.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace IndustriellMaskinpark.Components.Account
