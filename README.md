@@ -8,16 +8,16 @@ This project is a Blazor Web App designed to serve as a **Management System** fo
 ## **Features**
 
 ### **Frontend (Blazor Web App)**
-1. **List of Machines**:
+1. **DeviceList Component (list of machines)**:
    - Displays a list of all industrial machines.
    - Includes:
-     - Machine Name
      - Machine ID (GUID)
+     - Location
+     - Last updated
+     - Machine type
      - Current Status (Online/Offline)
-     - Latest Data sent by the machine.
-   - Includes a button to simulate sending data to a machine.
 
-2. **Statistics Component**:
+2. **DailyStats Component**:
    - A constantly visible component that displays machine park statistics:
      - Total number of machines.
      - Number of online machines.
