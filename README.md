@@ -1,4 +1,4 @@
-# Övning 17 – Industriellmaskinpark Management System
+# Industriellmaskinpark Management System
 
 ## **Project Overview**
 This project is a Blazor Web App designed to serve as a **Management System** for a fictional industrial machinery park. It is targeted toward **support technicians** who will use the system to administer and monitor the machinery. The application provides data about the machines, enables machine control, and includes essential statistics.
